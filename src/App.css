@@ -2,6 +2,7 @@
   display: flex;
   height: 100vh;
   width: 100vw;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -123,7 +124,7 @@
   flex: 1;
   background: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   border: 1px solid var(--border-color);
   transition: width 0.3s ease;
@@ -181,13 +182,13 @@
 /* Landing Page Styles */
 .landing-page {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: radial-gradient(circle at top, #161b22, #0d1117);
-  padding: 40px 20px;
+  padding: 80px 20px 120px;
 }
 
 .landing-header {
@@ -226,6 +227,80 @@
   font-weight: 600;
 }
 
+.section-heading-with-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.info-tooltip-container {
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+  position: relative;
+}
+
+.info-icon {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.info-tooltip-container:hover .info-icon {
+  color: var(--accent-color);
+}
+
+.tooltip-content {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  width: max-content;
+  min-width: 220px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.info-tooltip-container:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.tooltip-content ol {
+  font-family: var(--font-family);
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.tooltip-content li {
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.tooltip-content li:last-child {
+  margin-bottom: 0;
+}
+
+.tooltip-content strong {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
 .template-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -246,7 +321,7 @@
 .template-card:hover {
   transform: translateY(-4px);
   border-color: var(--text-secondary);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .template-card.selected {

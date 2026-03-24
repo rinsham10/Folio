@@ -22,8 +22,7 @@ body {
   background-color: var(--bg-color);
   color: var(--text-primary);
   font-family: var(--font-family);
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
 }
 
 #root {

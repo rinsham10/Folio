@@ -147,7 +147,20 @@ function App() {
         </header>
 
         <section className="template-selection">
-          <h2>Select a Template</h2>
+          <div className="section-heading-with-info">
+            <h2>Select a Template</h2>
+            <div className="info-tooltip-container">
+              <span className="info-icon">ⓘ</span>
+              <div className="tooltip-content">
+                <ol>
+                  <li><strong>1. Select</strong> a template</li>
+                  <li><strong>2. Fill</strong> in your details</li>
+                  <li><strong>3. Export</strong> the static files</li>
+                  <li><strong>4. Deploy</strong> to any hosting</li>
+                </ol>
+              </div>
+            </div>
+          </div>
           <div className="template-grid">
             <div
               className={`template-card ${templateId === 'modern' ? 'selected' : ''}`}
