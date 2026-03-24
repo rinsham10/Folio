@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Download, Monitor, Smartphone, Tablet, ArrowLeft } from 'lucide-react';
 import { generateExportableHTML as modernHTML } from './templates/ModernTheme';
 import { generateExportableHTML as minimalHTML } from './templates/MinimalTheme';
+import { generateExportableHTML as bentoHTML } from './templates/BentoTheme';
 import { downloadPortfolioData } from './utils/exportUtils';
 
 function App() {
@@ -112,8 +113,17 @@ function App() {
     await downloadPortfolioData(data, templateId);
   };
 
-  // Generate the live HTML for the iframe
-  const htmlContent = templateId === 'modern' ? modernHTML(data) : minimalHTML(data);
+  // Generate the live HTML for the iframe with debounce to prevent flashing
+  const [htmlContent, setHtmlContent] = useState(() =>
+    templateId === 'modern' ? modernHTML(data) : templateId === 'minimal' ? minimalHTML(data) : bentoHTML(data)
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHtmlContent(templateId === 'modern' ? modernHTML(data) : templateId === 'minimal' ? minimalHTML(data) : bentoHTML(data));
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [data, templateId]);
 
   if (view === 'landing') {
     return (
@@ -143,6 +153,13 @@ function App() {
             >
               <h3>Clean Minimal</h3>
               <p>An elegant, bright, and typography-focused light-mode design.</p>
+            </div>
+            <div
+              className={`template-card ${templateId === 'bento' ? 'selected' : ''}`}
+              onClick={() => setTemplateId('bento')}
+            >
+              <h3>Bento Grid</h3>
+              <p>A structured, modern dashboard feel using responsive grid layouts.</p>
             </div>
           </div>
           <button
