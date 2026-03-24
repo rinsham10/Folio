@@ -2,6 +2,8 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { generateExportableHTML as genModernHTML, generateCSS as genModernCSS } from '../templates/ModernTheme';
 import { generateExportableHTML as genMinimalHTML, generateCSS as genMinimalCSS } from '../templates/MinimalTheme';
+import { generateExportableHTML as genBentoHTML, generateCSS as genBentoCSS } from '../templates/BentoTheme';
+import { generateExportableHTML as genEditorialHTML, generateCSS as genEditorialCSS } from '../templates/EditorialTheme';
 
 export const downloadPortfolioData = async (data, templateId) => {
   const zip = new JSZip();
@@ -9,12 +11,29 @@ export const downloadPortfolioData = async (data, templateId) => {
   let htmlContent;
   let cssContent;
 
-  if (templateId === 'modern') {
-    htmlContent = genModernHTML(data, true);
-    cssContent = genModernCSS();
-  } else {
-    htmlContent = genMinimalHTML(data, true);
-    cssContent = genMinimalCSS();
+  console.log("Exporting with templateId:", templateId);
+
+  switch (templateId) {
+    case 'modern':
+      htmlContent = genModernHTML(data, true);
+      cssContent = genModernCSS();
+      break;
+    case 'bento':
+      htmlContent = genBentoHTML(data, true);
+      cssContent = genBentoCSS();
+      break;
+    case 'editorial':
+      htmlContent = genEditorialHTML(data, true);
+      cssContent = genEditorialCSS();
+      break;
+    case 'minimal':
+      htmlContent = genMinimalHTML(data, true);
+      cssContent = genMinimalCSS();
+      break;
+    default:
+      console.warn("Unknown templateId, falling back to Modern:", templateId);
+      htmlContent = genModernHTML(data, true);
+      cssContent = genModernCSS();
   }
 
   // Add files to zip
@@ -36,7 +55,7 @@ Enjoy!`;
   // Generate a Blob object and download it
   try {
     const content = await zip.generateAsync({ type: "blob" });
-    saveAs(content, "portfolio.zip");
+    saveAs(content, `portfolio-${templateId}.zip`);
   } catch (error) {
     console.error("Failed to generate zip file:", error);
     alert("There was an error generating your portfolio. Please try again.");

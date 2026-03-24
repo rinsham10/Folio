@@ -379,7 +379,7 @@ function App() {
         <div className="sidebar-footer">
           <button className="btn-primary" onClick={handleExport} style={{ width: '100%' }}>
             <Download size={18} />
-            Export Portfolio
+            Export {templateId.charAt(0).toUpperCase() + templateId.slice(1)} Portfolio
           </button>
         </div>
       </aside>

@@ -264,7 +264,7 @@
   padding: 16px;
   width: max-content;
   min-width: 220px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
   transition: all 0.2s ease;
