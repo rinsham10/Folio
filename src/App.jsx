@@ -4,6 +4,7 @@ import { Download, Monitor, Smartphone, Tablet, ArrowLeft } from 'lucide-react';
 import { generateExportableHTML as modernHTML } from './templates/ModernTheme';
 import { generateExportableHTML as minimalHTML } from './templates/MinimalTheme';
 import { generateExportableHTML as bentoHTML } from './templates/BentoTheme';
+import { generateExportableHTML as editorialHTML } from './templates/EditorialTheme';
 import { downloadPortfolioData } from './utils/exportUtils';
 
 function App() {
@@ -114,13 +115,21 @@ function App() {
   };
 
   // Generate the live HTML for the iframe with debounce to prevent flashing
-  const [htmlContent, setHtmlContent] = useState(() =>
-    templateId === 'modern' ? modernHTML(data) : templateId === 'minimal' ? minimalHTML(data) : bentoHTML(data)
-  );
+  const getHtmlContent = (id, d) => {
+    switch(id) {
+      case 'minimal': return minimalHTML(d);
+      case 'bento': return bentoHTML(d);
+      case 'editorial': return editorialHTML(d);
+      case 'modern':
+      default: return modernHTML(d);
+    }
+  };
+
+  const [htmlContent, setHtmlContent] = useState(() => getHtmlContent(templateId, data));
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setHtmlContent(templateId === 'modern' ? modernHTML(data) : templateId === 'minimal' ? minimalHTML(data) : bentoHTML(data));
+      setHtmlContent(getHtmlContent(templateId, data));
     }, 400);
     return () => clearTimeout(timer);
   }, [data, templateId]);
@@ -160,6 +169,13 @@ function App() {
             >
               <h3>Bento Grid</h3>
               <p>A structured, modern dashboard feel using responsive grid layouts.</p>
+            </div>
+            <div
+              className={`template-card ${templateId === 'editorial' ? 'selected' : ''}`}
+              onClick={() => setTemplateId('editorial')}
+            >
+              <h3>Creative Editorial</h3>
+              <p>A visually rich, design-focused portfolio with expressive typography and elegant spacing.</p>
             </div>
           </div>
           <button
